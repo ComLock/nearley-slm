@@ -1,9 +1,10 @@
 import test from 'ava';
-import render from '../lib/render';
+import {render} from '../lib/render';
 
 
 const PARRALELL_TESTS = {
-	'html': '<html></html>'
+	//'html': '<html></html>'
+	'body#id1': '<body id="id1"></body>'
 };
 
 
