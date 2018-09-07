@@ -3,6 +3,12 @@ import {el} from 'render-js/src/html/el.es';
 import grammar from './grammar';
 
 
+function evalInContext(js, context) {
+	//console.log(JSON.stringify({js, context}, null, 4));
+	return (new Function( "with(this) { return " + js + "}")).call(context);
+}
+
+
 export function render(template, model = {}) {
 	const parser = new Parser(grammar.ParserRules, grammar.ParserStart);
 	const dom = parser.feed(template).results;
@@ -19,8 +25,8 @@ export function render(template, model = {}) {
 	let lines = [];
 	dom[0].forEach(entry => {
 		const {tag, attributes, classes, id, content} = entry;
-		const evaled = content ? eval('`'+content+'`') : null;
-		//console.log(JSON.stringify({tag, classes, id, attributes, content}, null, 4));
+		const evaled = content ? evalInContext(content, model) : null;
+		//console.log(JSON.stringify({tag, classes, id, attributes, content, evaled, model}, null, 4));
 		if(classes) { attributes.class = classes; }
 		if(id) { attributes.id = id; }
 		const htmlString = el(tag, attributes, evaled);
