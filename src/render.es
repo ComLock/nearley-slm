@@ -1,10 +1,11 @@
 import {Parser} from 'nearley';
+import {el} from 'render-js/src/html/el.es';
 import grammar from './grammar';
 
 
-export function render(inputStr) {
+export function render(template, model = {}) {
 	const parser = new Parser(grammar.ParserRules, grammar.ParserStart);
-	const dom = parser.feed(inputStr).results;
+	const dom = parser.feed(template).results;
 	if (dom.length === 0) {
 		throw new Error('Found no parsings.');
 	}
@@ -13,17 +14,19 @@ export function render(inputStr) {
 		throw new Error('Ambiguous results.');
 	}
 
-	//console.log(dom);
+	//console.log(JSON.stringify(dom, null, 4));
 
-	let htmlString = '';
-	dom.forEach(el => {
-		const {tag, classes, id} = el;
-		htmlString += `<${tag}`
-		if (classes) { htmlString += ` class="${classes}"` }
-		if (id) { htmlString += ` id="${id}"` }
-		htmlString += `></${tag}>`;
+	let lines = [];
+	dom[0].forEach(entry => {
+		const {tag, attributes, classes, id, content} = entry;
+		const evaled = content ? eval('`'+content+'`') : null;
+		//console.log(JSON.stringify({tag, classes, id, attributes, content}, null, 4));
+		if(classes) { attributes.class = classes; }
+		if(id) { attributes.id = id; }
+		const htmlString = el(tag, attributes, evaled);
+		lines.push(htmlString);
 	});
-	return htmlString;
+	return lines.join("\n");
 }
 
 
