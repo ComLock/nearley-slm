@@ -1,0 +1,37 @@
+{
+  "name": "nearley-slm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run compile-grammar && babel -d lib src",
+    "compile-grammar": "nearleyc ./src/grammar.ne --out ./src/grammar.js;",
+    "pretest": "npm run build;",
+    "test": "ava --verbose;"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ComLock/nearley-slm.git"
+  },
+  "keywords": [
+    "slm",
+    "templating",
+    "nearley"
+  ],
+  "author": "Christian Andreas Westgaard <comlock@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ComLock/nearley-slm/issues"
+  },
+  "homepage": "https://github.com/ComLock/nearley-slm#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "ava": "^0.25.0",
+    "babel-loader": "^8.0.2",
+    "nearley": "^2.15.1",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0"
+  }
+}
