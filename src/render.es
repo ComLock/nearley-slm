@@ -17,8 +17,11 @@ export function render(inputStr) {
 
 	let htmlString = '';
 	dom.forEach(el => {
-		const {tag, id} = el;
-		htmlString += `<${tag} id="${id}"></${tag}>`
+		const {tag, classes, id} = el;
+		htmlString += `<${tag}`
+		if (classes) { htmlString += ` class="${classes}"` }
+		if (id) { htmlString += ` id="${id}"` }
+		htmlString += `></${tag}>`;
 	});
 	return htmlString;
 }

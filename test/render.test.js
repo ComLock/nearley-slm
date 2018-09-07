@@ -3,8 +3,9 @@ import {render} from '../lib/render';
 
 
 const PARRALELL_TESTS = {
-	//'html': '<html></html>'
-	'body#id1': '<body id="id1"></body>'
+	'html': '<html></html>',
+	'body#id1': '<body id="id1"></body>',
+	'main.className': '<main class="className"></main>'
 };
 
 
