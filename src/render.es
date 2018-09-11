@@ -24,8 +24,8 @@ export function render(template, model = {}) {
 
 	let lines = [];
 	dom[0].forEach(entry => {
-		const {tag, attributes, classes, id, content} = entry;
-		const evaled = content ? evalInContext(content, model) : null;
+		const {tag, attributes = {}, classes, id, js} = entry;
+		const evaled = js ? evalInContext(js, model) : null;
 		//console.log(JSON.stringify({tag, classes, id, attributes, content, evaled, model}, null, 4));
 		if(classes) { attributes.class = classes; }
 		if(id) { attributes.id = id; }
