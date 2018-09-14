@@ -7,7 +7,7 @@ module.exports = {
 	context: path.resolve(__dirname, 'src'),
 	devtool: false, // Don't waste time generating sourceMaps
 	entry: {
-		render: './render.es'
+		'indented': './indented.es',
 	},
 	mode: 'development',
 	module: {
@@ -56,15 +56,8 @@ module.exports = {
 		] // minimizer
 	}, // optimization
 	output: {
-		path: path.join(__dirname, 'lib'),
+		path: path.join(__dirname, 'src'),
 		filename: '[name].js',
 		libraryTarget: 'commonjs'
-	},
-	plugins: [
-		new CleanWebpackPlugin(
-			path.join(__dirname, 'lib'), {
-				verbose: true
-			}
-		)
-	]
+	}
 };
