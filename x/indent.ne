@@ -1,19 +1,43 @@
-main -> line (%newline:+ line):* %newline:* {%
-	([first, [...lines]]) => arrayToHierarchy([first, ...lines.map(([n, l]) => l)])
+@{%
+const moo = require("moo");
+
+const lexer = moo.compile({
+	char:    /[^\n\r\t]/,
+	//chars:    /[^\n\r\t]+/,
+	newline: { match: /\r?\n/, lineBreaks: true },
+	tab:     /\t/,
+	//tabs:    /\t+/,
+});
+%}
+@lexer lexer
+
+main -> %newline:* line (%newline:+ line):* %newline:* {%
+	([a, first, [...lines]]) => arrayToHierarchy([first, ...lines.map(([n, l]) => l)])
 %}
 
-line -> %tab:* %char:+ {% ([tabs, chars]) => ({
-	level: tabs.length,
-	string: chars.join('')
-}) %}
+line -> %tab:* %char:+ {% ([tabs, chars]) => {
+	//console.log(JSON.stringify({tabs, chars}, null, 4));
+	return {
+		//level: tabs ? tabs.length : 0,
+		level: tabs.length,
+		string: chars.join('')
+	};
+} %}
+
+# Rule slower than using lexer
+#chars -> [^\n\r\t]:+ {% ([chars]) => chars.join('') %}
 
 @{%
-	const tab = { literal: "\t" };
+	// Custom token matchers (slower than using moo)
+	//const tab = { literal: "\t" };
 	//const tab = { test: x => /^\t$/.test(x) };
 	//const tabs = { test: x => /^\t+$/.test(x) };
-	const newline = { test: x => /^\r?\n$/.test(x) };
+
+	//const newline = { test: x => /^\r?\n$/.test(x) };
 	//const newlines = { test: x => /^(\r?\n)+$/.test(x) };
-	const char = { test: x => /^[^\n\r\t]$/.test(x) };
+
+	//const char = { test: x => /^[^\n\r\t]$/.test(x) };
+	//const chars = { test: x => /^[^\n\r\t]+$/.test(x) };
 
 	const takeChildren = (lines) => {
 		const children = [];
