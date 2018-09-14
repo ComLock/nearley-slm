@@ -12,7 +12,8 @@
     "prewebpack": "npm run grammars;",
     "test": "ava --verbose;",
     "webpack": "webpack",
-    "x": "nearleyc ./x/indent.ne --out ./x/indent.js && (cat ./x/template.nsl | nearley-test ./x/indent.js)"
+    "moo": "nearleyc ./x/moo.ne --out ./x/moo.js && ava --verbose ./x/moo.test.js;",
+    "x": "nearleyc ./x/indent.ne --out ./x/indent.js && (cat ./x/template.nsl | nearley-test -q ./x/indent.js)"
   },
   "repository": {
     "type": "git",
