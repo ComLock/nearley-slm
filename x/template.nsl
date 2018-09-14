@@ -1,5 +1,23 @@
+doctype
 html
 	head
-		title
+		title 'Browser tab title'
 	body
+		header
+			h1 'Heading in header'
+			p 'Paragraph in header'
+		nav
+			a[href='/'] 'Home'
+			a#id.class[href=href] name
 		main
+			section
+				h1 'Heading in section'
+				p 'Paragraph in section'
+			article
+				h1 'Heading in article'
+				p 'Paragraph in article'
+		aside
+			h2 'Heading in aside'
+			p 'Paragraph in aside'
+		footer
+			p 'Paragraph in footer'
